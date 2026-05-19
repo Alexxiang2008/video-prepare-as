@@ -32,7 +32,7 @@ There are two ways to use it. With no script yet, it talks you through the whole
 
 ## The workflow
 
-video-prepare-as sits upstream and turns your idea into a script. The resulting `video-spec.md` can be handed off to two rendering engines:
+video-prepare-as sits upstream and turns your idea into a script. The resulting `video-spec.md` is a detailed, second-precise storyboard document that can be handed off to downstream rendering engines:
 
 ```
        You: "I want to make a video"
@@ -48,13 +48,14 @@ video-prepare-as sits upstream and turns your idea into a script. The resulting 
         ┌───────┴───────┐
         ▼               ▼
    HyperFrames       Remotion
+   renders directly  AI reads spec, generates React components
    /hyperframes      /remotion
         │               │
         ▼               ▼
   finished video    React component video
 ```
 
-So before you start, install at least one rendering engine (HyperFrames or Remotion).
+**HyperFrames** reads `video-spec.md` natively and renders. **Remotion** relies on an AI agent to read the spec — its scenes, animation descriptions, audio timeline — and translate them into React component code before rendering. These aren't equivalent: HyperFrames is a native integration; Remotion requires an AI translation layer.
 
 ## Install
 
@@ -105,13 +106,13 @@ It checks what you're after, looks at whether the change touches other shots, th
 
 Once the script is final, hand it to one of the rendering engines:
 
-**HyperFrames** — HTML rendering, great for text layout, charts, geometric animation:
+**HyperFrames** — native integration, reads `video-spec.md` directly:
 
 ```
 /hyperframes
 ```
 
-**Remotion** — React component-based rendering, ideal for programmatic control, reusable components, and CI/CD video pipelines:
+**Remotion** — AI translation mode. The Remotion skill's AI agent reads each Scene in `video-spec.md` (timing, components, animation descriptions, audio timeline) and translates them into React components + Remotion animation API code before rendering. Ideal for programmatic control, reusable components, and CI/CD video pipelines:
 
 ```
 /remotion

@@ -32,7 +32,7 @@ video-prepare-as 就是来陪你过这一关的。装好之后,你在 Codex 或�
 
 ## 工作流程
 
-整件事是 video-prepare-as 在上游把你的想法变成脚本,产出的 `video-spec.md` 可以交给两个渲染引擎:
+整件事是 video-prepare-as 在上游把你的想法变成脚本,产出的 `video-spec.md` 是一份精确到秒的分镜文档,可以交给下游渲染引擎:
 
 ```
         你:"我想做个视频"
@@ -48,13 +48,14 @@ video-prepare-as 就是来陪你过这一关的。装好之后,你在 Codex 或�
         ┌───────┴───────┐
         ▼               ▼
    HyperFrames       Remotion
+   直接渲染          AI 读 spec 生成 React 组件
    /hyperframes      /remotion
         │               │
         ▼               ▼
     成品视频          React 组件化视频
 ```
 
-所以用之前,先把渲染引擎装好(HyperFrames 或 Remotion,至少装一个)。
+**HyperFrames** 直接读取 video-spec.md 渲染视频。**Remotion** 则由 AI agent 读取 spec 中的分镜、动画描述、音频时间轴,翻译成 React 组件代码后渲染。两者的关系不是对等的——HyperFrames 是原生对接,Remotion 需要一层 AI 翻译。
 
 ## 安装
 
@@ -105,13 +106,13 @@ npx skills add Alexxiang2008/video-prepare-as -g
 
 脚本定稿,可以交给两个渲染引擎:
 
-**HyperFrames** — HTML 渲染,适合文字排版、数据图表、几何动效:
+**HyperFrames** — 原生对接,直接读取 video-spec.md 渲染:
 
 ```
 /hyperframes
 ```
 
-**Remotion** — React 组件化渲染,适合需要编程控制、复用组件、CI/CD 自动化出片的场景:
+**Remotion** — AI 翻译模式,Remotion skill 的 AI agent 读取 video-spec.md 中的每个 Scene(时序、组件、动画描述、音频时间轴),将其翻译成 React 组件 + Remotion 动画 API 代码后渲染。适合需要编程控制、复用组件、CI/CD 自动化出片的场景:
 
 ```
 /remotion

@@ -1,5 +1,3 @@
-<img width="2172" height="724" alt="ChatGPT Image May 16, 2026, 10_46_58 PM" src="https://github.com/user-attachments/assets/7820d93e-84b6-4e09-904c-9567c6595c57" />
-
 **English** · [中文](README.zh.md)
 
 # video-prepare-as

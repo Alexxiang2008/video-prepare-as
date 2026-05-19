@@ -32,7 +32,7 @@ video-prepare-as 就是来陪你过这一关的。装好之后,你在 Codex 或�
 
 ## 工作流程
 
-整件事是两个 skill 接力。video-prepare-as 在上游,把你的想法变成脚本;HyperFrames 在下游,把脚本变成视频。
+整件事是 video-prepare-as 在上游把你的想法变成脚本,产出的 `video-spec.md` 可以交给两个渲染引擎:
 
 ```
         你:"我想做个视频"
@@ -45,16 +45,16 @@ video-prepare-as 就是来陪你过这一关的。装好之后,你在 Codex 或�
                 ▼
           video-spec.md           分镜脚本(精确到秒)
                 │
-                ▼   /hyperframes
-   ┌────────────────────────┐
-   │       HyperFrames      │   按脚本渲染
-   └────────────────────────┘
-                │
-                ▼
-            成品视频
+        ┌───────┴───────┐
+        ▼               ▼
+   HyperFrames       Remotion
+   /hyperframes      /remotion
+        │               │
+        ▼               ▼
+    成品视频          React 组件化视频
 ```
 
-所以用之前,这两个 skill 都得先装上。
+所以用之前,先把渲染引擎装好(HyperFrames 或 Remotion,至少装一个)。
 
 ## 安装
 
@@ -64,7 +64,7 @@ video-prepare-as 就是来陪你过这一关的。装好之后,你在 Codex 或�
 
 ```bash
 npx skills add heygen-com/hyperframes
-npx skills add HLZD/video-prepare-as
+npx skills add Alexxiang2008/video-prepare-as
 ```
 
 每条命令都一次装好,Codex、Claude Code、Cursor 这些环境都能调用,不用一个工具一个工具地装。
@@ -72,7 +72,7 @@ npx skills add HLZD/video-prepare-as
 安装位置分两种。默认装到当前文件夹(项目级),只在你跑命令的那个项目里生效。如果你经常做视频,加 `-g` 装到全局,所有项目通用:
 
 ```bash
-npx skills add HLZD/video-prepare-as -g
+npx skills add Alexxiang2008/video-prepare-as -g
 ```
 
 没装过 `skills` 工具也不用管,`npx` 会临时拉一份来跑,跑完不留东西。需要 Node 18 以上。
@@ -103,10 +103,18 @@ npx skills add HLZD/video-prepare-as -g
 
 ### 渲染成视频
 
-脚本定稿,交给 HyperFrames:
+脚本定稿,可以交给两个渲染引擎:
+
+**HyperFrames** — HTML 渲染,适合文字排版、数据图表、几何动效:
 
 ```
 /hyperframes
+```
+
+**Remotion** — React 组件化渲染,适合需要编程控制、复用组件、CI/CD 自动化出片的场景:
+
+```
+/remotion
 ```
 
 > 在 Claude Code 里,除了说人话自动触发,也可以直接打 `/video-prepare-as` 调用。

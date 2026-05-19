@@ -32,7 +32,7 @@ There are two ways to use it. With no script yet, it talks you through the whole
 
 ## The workflow
 
-It's two skills working in sequence. video-prepare-as sits upstream and turns your idea into a script. HyperFrames sits downstream and turns the script into video.
+video-prepare-as sits upstream and turns your idea into a script. The resulting `video-spec.md` can be handed off to two rendering engines:
 
 ```
        You: "I want to make a video"
@@ -45,16 +45,16 @@ It's two skills working in sequence. video-prepare-as sits upstream and turns yo
                 ▼
           video-spec.md           shot-by-shot script, timed
                 │
-                ▼   /hyperframes
-   ┌────────────────────────┐
-   │       HyperFrames      │   renders from the script
-   └────────────────────────┘
-                │
-                ▼
-          finished video
+        ┌───────┴───────┐
+        ▼               ▼
+   HyperFrames       Remotion
+   /hyperframes      /remotion
+        │               │
+        ▼               ▼
+  finished video    React component video
 ```
 
-So before you start, you'll want both skills installed.
+So before you start, install at least one rendering engine (HyperFrames or Remotion).
 
 ## Install
 
@@ -64,7 +64,7 @@ Before anything else, install two things: HyperFrames (the renderer, downstream)
 
 ```bash
 npx skills add heygen-com/hyperframes
-npx skills add HLZD/video-prepare-as
+npx skills add Alexxiang2008/video-prepare-as
 ```
 
 Each command installs once and covers Codex, Claude Code, Cursor and the rest. You don't install separately for each tool.
@@ -72,7 +72,7 @@ Each command installs once and covers Codex, Claude Code, Cursor and the rest. Y
 Two scopes to know about. By default it installs into the current folder (project-level), so it only works in the project where you ran the command. If you make videos often, add `-g` to install globally, available everywhere:
 
 ```bash
-npx skills add HLZD/video-prepare-as -g
+npx skills add Alexxiang2008/video-prepare-as -g
 ```
 
 Never used the `skills` CLI? Nothing to set up. `npx` pulls a copy just to run and leaves nothing behind. Needs Node 18 or newer.
@@ -103,10 +103,18 @@ It checks what you're after, looks at whether the change touches other shots, th
 
 ### Rendering it
 
-Once the script is final, hand it to HyperFrames:
+Once the script is final, hand it to one of the rendering engines:
+
+**HyperFrames** — HTML rendering, great for text layout, charts, geometric animation:
 
 ```
 /hyperframes
+```
+
+**Remotion** — React component-based rendering, ideal for programmatic control, reusable components, and CI/CD video pipelines:
+
+```
+/remotion
 ```
 
 > In Claude Code, besides triggering it by talking, you can also call it directly with `/video-prepare-as`.
